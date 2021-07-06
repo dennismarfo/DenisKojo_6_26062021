@@ -1,3 +1,4 @@
+// multer gere les fichier entrants dans les requêtes HTTP
 const multer = require('multer');
 
 const MIME_TYPES = {
@@ -6,6 +7,7 @@ const MIME_TYPES = {
   'image/png': 'png'
 };
 
+// Pour la localisation de l'enregistrement du fichier
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'images');
@@ -17,4 +19,5 @@ const storage = multer.diskStorage({
   }
 });
 
+// export du module
 module.exports = multer({storage: storage}).single('image');
