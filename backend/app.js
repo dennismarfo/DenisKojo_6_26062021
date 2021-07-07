@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 const path = require('path');
 
 const sauceRoutes = require('./routes/sauce');
@@ -17,6 +19,9 @@ mongoose.connect('mongodb+srv://dennis_marfo:RTNrnFedXKWt4F5@cluster0.u26h2.mong
 
 const app = express();
 
+// To remove data, use:
+app.use(mongoSanitize());
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -26,6 +31,8 @@ app.use((req, res, next) => {
 
 // Methode qui va transformer le corps de la requête en objet json
 app.use(bodyParser.json());
+
+app.use(helmet());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
